@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "lint": "ultracite format",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,7 +30,7 @@
     "vite": "^7.1.2"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
+    "src/*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
       "pnpm dlx ultracite format"
     ]
   }
