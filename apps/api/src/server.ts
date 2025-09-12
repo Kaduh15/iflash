@@ -16,20 +16,21 @@ app.register(fastifyCors, {
 app.setSerializerCompiler(serializerCompiler);
 app.setValidatorCompiler(validatorCompiler);
 
-app.get("/health", (_request, _reply) => {
-	return "ok";
-});
+app.get(
+	"/health",
+	() => {
+		return "ok";
+	}
+);
 
 const start = async () => {
 	try {
 		await app.listen({ port: env.PORT, host: env.HOST });
-		console.info(
-			`Server listening on port ${env.PORT} at http://${env.HOST}:${env.PORT}`
-		);
+		console.info(`✅ server on http://${env.HOST}:${env.PORT}`);
 	} catch (err) {
-		app.log.error(err);
+		console.error(err);
 		process.exit(1);
 	}
 };
 
-start();
+await start();

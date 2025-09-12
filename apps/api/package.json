@@ -7,9 +7,11 @@
   "scripts": {
     "start": "node --env-file .env --experimental-strip-types src/server.ts",
     "dev": "node --env-file .env --experimental-strip-types --watch src/server.ts",
-    "db:start": "docker run --name db-iflash -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=mydb -p 5432:5432 -v db-iflash-data:/var/lib/postgresql/data -d postgres:15",
-    "db:stop": "docker stop db-iflash && docker rm db-iflash",
-    "db:clean": "docker volume rm db-iflash-data || true",
+    "db:up": "docker run --name db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=mydb -p 5432:5432 -v db-data:/var/lib/postgresql/data -d postgres:15",
+    "db:down": "docker stop db && docker rm db",
+    "db:clean": "docker volume rm db-data || true",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,20 +21,23 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
     "@types/node": "^24.3.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.1.5",
+    "@types/pg": "^8.15.5",
+    "@types/uuid": "^10.0.0",
+    "drizzle-kit": "^0.31.4",
+    "tsx": "^4.20.4",
     "typescript": "^5.9.2",
     "ultracite": "5.2.4"
   },
   "dependencies": {
     "@fastify/cors": "^11.1.0",
+    "dotenv": "^17.2.1",
+    "drizzle-orm": "^0.44.4",
     "fastify": "^5.5.0",
     "fastify-type-provider-zod": "^5.0.3",
-    "zod": "^4.0.17"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,jsonc,css,scss,md,mdx}": [
-      "pnpm dlx ultracite format"
-    ]
+    "pg": "^8.16.3",
+    "postgres": "^3.4.7",
+    "uuid": "^13.0.0",
+    "zod": "^4.0.17",
+    "zod-to-json-schema": "^3.24.6"
   }
 }
