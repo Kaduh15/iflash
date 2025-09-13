@@ -42,6 +42,6 @@ export const userWords = pgTable(
 		check("ease_check", sql`${table.ease} >= 1 AND ${table.ease} <= 3`),
 		index("idx_user_words_user_id").on(table.userId),
 		index("idx_user_words_next_review_date").on(table.nextReviewDate),
-    index("idx_user_words_status").on(table.status)
+		index("idx_user_words_status").on(table.status),
 	]
 );
