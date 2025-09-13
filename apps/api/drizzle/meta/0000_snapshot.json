@@ -41,12 +41,8 @@
           "name": "daily_logs_user_id_users_id_fk",
           "tableFrom": "daily_logs",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -54,10 +50,7 @@
       "compositePrimaryKeys": {
         "daily_logs_user_id_date_pk": {
           "name": "daily_logs_user_id_date_pk",
-          "columns": [
-            "user_id",
-            "date"
-          ]
+          "columns": ["user_id", "date"]
         }
       },
       "uniqueConstraints": {},
@@ -120,12 +113,8 @@
           "name": "review_events_session_id_study_sessions_id_fk",
           "tableFrom": "review_events",
           "tableTo": "study_sessions",
-          "columnsFrom": [
-            "session_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["session_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -133,12 +122,8 @@
           "name": "review_events_user_id_users_id_fk",
           "tableFrom": "review_events",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -146,12 +131,8 @@
           "name": "review_events_word_id_words_id_fk",
           "tableFrom": "review_events",
           "tableTo": "words",
-          "columnsFrom": [
-            "word_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["word_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -199,12 +180,8 @@
           "name": "steak_counters_user_id_users_id_fk",
           "tableFrom": "steak_counters",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -212,9 +189,7 @@
       "compositePrimaryKeys": {
         "steak_counters_user_id_pk": {
           "name": "steak_counters_user_id_pk",
-          "columns": [
-            "user_id"
-          ]
+          "columns": ["user_id"]
         }
       },
       "uniqueConstraints": {},
@@ -277,12 +252,8 @@
           "name": "study_sessions_user_id_users_id_fk",
           "tableFrom": "study_sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -349,9 +320,7 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -474,12 +443,8 @@
           "name": "user_words_user_id_users_id_fk",
           "tableFrom": "user_words",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -487,12 +452,8 @@
           "name": "user_words_word_id_words_id_fk",
           "tableFrom": "user_words",
           "tableTo": "words",
-          "columnsFrom": [
-            "word_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["word_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -563,22 +524,12 @@
     "public.result": {
       "name": "result",
       "schema": "public",
-      "values": [
-        "fail",
-        "hard",
-        "good",
-        "easy"
-      ]
+      "values": ["fail", "hard", "good", "easy"]
     },
     "public.status": {
       "name": "status",
       "schema": "public",
-      "values": [
-        "locked",
-        "unlocked",
-        "learning",
-        "done"
-      ]
+      "values": ["locked", "unlocked", "learning", "done"]
     }
   },
   "schemas": {},
