@@ -1,10 +1,9 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
-
+import { HTTP_STATUS } from '../constants/https-status.ts'
 import { createUser } from '../db/functions/create-user.ts'
 import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
 import { hash } from '../utils/crypt.ts'
-import { HTTP_STATUS } from '../utils/https-status.ts'
 import { createToken } from '../utils/jwt.ts'
 
 const PASSWORD_MIN_LENGTH = 8 as const
