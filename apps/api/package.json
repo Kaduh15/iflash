@@ -21,6 +21,7 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
+    "@faker-js/faker": "^10.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.3.0",
     "@types/pg": "^8.15.5",
@@ -38,6 +39,7 @@
     "argon2": "^0.44.0",
     "dotenv": "^17.2.1",
     "drizzle-orm": "^0.44.4",
+    "drizzle-seed": "^0.3.1",
     "fastify": "^5.5.0",
     "fastify-type-provider-zod": "^5.0.3",
     "jsonwebtoken": "^9.0.2",
