@@ -1,24 +1,24 @@
-import cookie from "@fastify/cookie";
-import fastifyCors from "@fastify/cors";
-import fastifySwagger from "@fastify/swagger";
-import fastifyScaler from "@scalar/fastify-api-reference";
-import { fastify } from "fastify";
+import cookie from "@fastify/cookie"
+import fastifyCors from "@fastify/cors"
+import fastifySwagger from "@fastify/swagger"
+import fastifyScaler from "@scalar/fastify-api-reference"
+import { fastify } from "fastify"
 import {
 	jsonSchemaTransform,
 	serializerCompiler,
 	validatorCompiler,
 	type ZodTypeProvider,
-} from "fastify-type-provider-zod";
-import { z } from "zod/v4";
-import { env } from "./env.ts";
-import { authSignupRouter } from "./routes/auth/signup.ts";
+} from "fastify-type-provider-zod"
+import { z } from "zod/v4"
+import { env } from "./env.ts"
+import { authSignupRouter } from "./routes/auth/signup.ts"
 
-const SECONDS_PER_MINUTE = 60;
-const MINUTES_PER_HOUR = 60;
-const HOURS_PER_DAY = 24;
-const DAYS_PER_WEEK = 7;
+const SECONDS_PER_MINUTE = 60
+const MINUTES_PER_HOUR = 60
+const HOURS_PER_DAY = 24
+const DAYS_PER_WEEK = 7
 const ONE_WEEK_SECONDS =
-	SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY * DAYS_PER_WEEK;
+	SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY * DAYS_PER_WEEK
 
 const app = fastify({
 	logger: {
@@ -30,11 +30,11 @@ const app = fastify({
 			},
 		},
 	},
-}).withTypeProvider<ZodTypeProvider>();
+}).withTypeProvider<ZodTypeProvider>()
 
 app.register(fastifyCors, {
 	origin: "http://localhost:5173",
-});
+})
 
 app.register(cookie, {
 	secret: env.COOKIE_SECRET,
@@ -46,7 +46,7 @@ app.register(cookie, {
 		maxAge: ONE_WEEK_SECONDS,
 		sameSite: "strict",
 	},
-});
+})
 
 await app.register(fastifySwagger, {
 	openapi: {
@@ -58,17 +58,17 @@ await app.register(fastifySwagger, {
 		},
 	},
 	transform: jsonSchemaTransform,
-});
+})
 
 await app.register(fastifyScaler, {
 	routePrefix: "/docs",
 	configuration: {
 		theme: "kepler",
 	},
-});
+})
 
-app.setSerializerCompiler(serializerCompiler);
-app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler)
+app.setValidatorCompiler(validatorCompiler)
 
 app.get(
 	"/health",
@@ -81,10 +81,10 @@ app.get(
 		},
 	},
 	() => {
-		return "ok";
+		return "ok"
 	}
-);
+)
 
-app.register(authSignupRouter);
+app.register(authSignupRouter)
 
-export { app };
+export { app }

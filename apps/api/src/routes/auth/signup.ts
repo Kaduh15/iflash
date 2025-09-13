@@ -1,13 +1,13 @@
-import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod";
-import z from "zod";
+import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod"
+import z from "zod"
 
-import { createUser } from "../../db/functions/create-user.ts";
-import { getUserByEmail } from "../../db/functions/get-user-by-email.ts";
-import { hash } from "../../utils/crypt.ts";
-import { HTTP_STATUS } from "../../utils/https-status.ts";
-import { createToken } from "../../utils/jwt.ts";
+import { createUser } from "../../db/functions/create-user.ts"
+import { getUserByEmail } from "../../db/functions/get-user-by-email.ts"
+import { hash } from "../../utils/crypt.ts"
+import { HTTP_STATUS } from "../../utils/https-status.ts"
+import { createToken } from "../../utils/jwt.ts"
 
-const PASSWORD_MIN_LENGTH = 8 as const;
+const PASSWORD_MIN_LENGTH = 8 as const
 
 export const authSignupRouter: FastifyPluginCallbackZod = (app) => {
 	app.post(
@@ -34,25 +34,25 @@ export const authSignupRouter: FastifyPluginCallbackZod = (app) => {
 			},
 		},
 		async (request, reply) => {
-			const { email, name, password } = request.body;
+			const { email, name, password } = request.body
 
-			const hasUser = await getUserByEmail(email);
+			const hasUser = await getUserByEmail(email)
 
 			if (hasUser) {
 				return reply.status(HTTP_STATUS.CONFLICT).send({
 					message: "Email ou senha invalidos",
-				});
+				})
 			}
 
-			const passwordHash = await hash(password);
+			const passwordHash = await hash(password)
 
-			const user = await createUser({ email, name, password: passwordHash });
+			const user = await createUser({ email, name, password: passwordHash })
 
 			const token = createToken({
 				sub: user.id,
-			});
+			})
 
-			return reply.setCookie("token", token).status(HTTP_STATUS.CREATED).send();
+			return reply.setCookie("token", token).status(HTTP_STATUS.CREATED).send()
 		}
-	);
-};
+	)
+}

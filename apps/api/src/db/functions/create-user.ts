@@ -1,19 +1,19 @@
-import { db } from "../index.ts";
-import { users } from "../schemas/userSchema.ts";
+import { db } from "../index.ts"
+import { User } from "../schemas/user-schema.ts"
 
-export type UserCreateSchema = typeof users.$inferInsert;
+export type UserCreateSchema = typeof User.$inferInsert
 
 export async function createUser({ email, name, password }: UserCreateSchema) {
 	const [result] = await db
-		.insert(users)
+		.insert(User)
 		.values({
 			email,
 			name,
 			password,
 		})
-		.returning();
+		.returning()
 
-	const { password: _, ...user } = result;
+	const { password: _, ...user } = result
 
-	return user;
+	return user
 }

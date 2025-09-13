@@ -1,6 +1,6 @@
-import z from "zod";
+import z from "zod"
 
-const DEFAULT_PORT = 3333 as const;
+const DEFAULT_PORT = 3333 as const
 
 export const envSchema = z.object({
 	PORT: z.coerce.number().default(DEFAULT_PORT),
@@ -11,8 +11,8 @@ export const envSchema = z.object({
 	NODE_ENV: z
 		.enum(["development", "test", "production"])
 		.default("development"),
-});
+})
 
-export type Env = z.infer<typeof envSchema>;
+export type Env = z.infer<typeof envSchema>
 
-export const env = envSchema.parse(process.env);
+export const env = envSchema.parse(process.env)
