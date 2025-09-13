@@ -1,7 +1,7 @@
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
-import { v7 as uuidv7 } from "uuid";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core"
+import { v7 as uuidv7 } from "uuid"
 
-export const users = pgTable("users", {
+export const User = pgTable("users", {
 	id: uuid("id")
 		.primaryKey()
 		.$defaultFn(() => uuidv7()),
@@ -11,4 +11,4 @@ export const users = pgTable("users", {
 	lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
 	createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 	updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
-});
+})

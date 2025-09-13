@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { sql } from "drizzle-orm"
 import {
 	check,
 	date,
@@ -8,27 +8,27 @@ import {
 	pgTable,
 	timestamp,
 	uuid,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/pg-core"
 
-import { users } from "./userSchema.ts";
-import { words } from "./words.ts";
+import { User } from "./user-schema.ts"
+import { Word } from "./word.ts"
 
-export const resultSchema = pgEnum("result", ["fail", "hard", "good", "easy"]);
+export const resultSchema = pgEnum("result", ["fail", "hard", "good", "easy"])
 export const statusSchema = pgEnum("status", [
 	"locked",
 	"unlocked",
 	"learning",
 	"done",
-]);
+])
 
-export const userWords = pgTable(
+export const UserWord = pgTable(
 	"user_words",
 	{
 		userId: uuid("user_id")
-			.references(() => users.id, { onDelete: "cascade" })
+			.references(() => User.id, { onDelete: "cascade" })
 			.notNull(),
 		wordId: uuid("word_id")
-			.references(() => words.id, { onDelete: "cascade" })
+			.references(() => Word.id, { onDelete: "cascade" })
 			.notNull(),
 		status: statusSchema("status").default("locked"),
 		nextReviewDate: date("next_review_date"),
@@ -44,4 +44,4 @@ export const userWords = pgTable(
 		index("idx_user_words_next_review_date").on(table.nextReviewDate),
 		index("idx_user_words_status").on(table.status),
 	]
-);
+)
