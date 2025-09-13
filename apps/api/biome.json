@@ -23,6 +23,9 @@
             "allow": ["warn", "error", "info"]
           }
         }
+      },
+      "nursery": {
+        "useConsistentTypeDefinitions": "off"
       }
     }
   },
