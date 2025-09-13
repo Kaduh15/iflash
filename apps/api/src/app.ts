@@ -11,7 +11,8 @@ import {
 } from "fastify-type-provider-zod"
 import { z } from "zod/v4"
 import { env } from "./env.ts"
-import { authSignupRouter } from "./routes/auth/signup.ts"
+import { authSignInRouter } from "./routes/sign-in.ts"
+import { authSignUpRouter } from "./routes/sign-up.ts"
 
 const SECONDS_PER_MINUTE = 60
 const MINUTES_PER_HOUR = 60
@@ -85,6 +86,7 @@ app.get(
 	}
 )
 
-app.register(authSignupRouter)
+app.register(authSignUpRouter)
+app.register(authSignInRouter)
 
 export { app }
