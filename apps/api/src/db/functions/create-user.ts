@@ -1,5 +1,5 @@
-import { db } from "../index.ts"
-import { User } from "../schemas/user-schema.ts"
+import { db } from '../index.ts'
+import { User } from '../schemas/user-schema.ts'
 
 export type UserCreateSchema = typeof User.$inferInsert
 

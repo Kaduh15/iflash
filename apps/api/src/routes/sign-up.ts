@@ -1,21 +1,21 @@
-import type { FastifyPluginCallbackZod } from "fastify-type-provider-zod"
-import z from "zod"
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import z from 'zod'
 
-import { createUser } from "../db/functions/create-user.ts"
-import { getUserByEmail } from "../db/functions/get-user-by-email.ts"
-import { hash } from "../utils/crypt.ts"
-import { HTTP_STATUS } from "../utils/https-status.ts"
-import { createToken } from "../utils/jwt.ts"
+import { createUser } from '../db/functions/create-user.ts'
+import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
+import { hash } from '../utils/crypt.ts'
+import { HTTP_STATUS } from '../utils/https-status.ts'
+import { createToken } from '../utils/jwt.ts'
 
 const PASSWORD_MIN_LENGTH = 8 as const
 const NAME_MIN_LENGTH = 4 as const
 
 export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 	app.post(
-		"/auth/sign-up",
+		'/auth/sign-up',
 		{
 			schema: {
-				tags: ["Auth"],
+				tags: ['Auth'],
 				body: z.object({
 					name: z
 						.string()
@@ -23,25 +23,25 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 							NAME_MIN_LENGTH,
 							`Nome precisa ter pelo menos ${NAME_MIN_LENGTH} caracteres`
 						)
-						.describe("Nome do usuário"),
-					email: z.email().describe("Email do usuário"),
+						.describe('Nome do usuário'),
+					email: z.email().describe('Email do usuário'),
 					password: z
 						.string()
 						.min(
 							PASSWORD_MIN_LENGTH,
 							`Senha precisa ter pelo menos ${PASSWORD_MIN_LENGTH} caracteres`
 						)
-						.describe("Senha do usuário"),
+						.describe('Senha do usuário'),
 				}),
 				response: {
 					[HTTP_STATUS.CREATED]: z
 						.null()
-						.describe("Usuário criado com sucesso!"),
+						.describe('Usuário criado com sucesso!'),
 					[HTTP_STATUS.CONFLICT]: z
 						.object({
 							message: z.string(),
 						})
-						.describe("Mensagem de erro indicando conflito"),
+						.describe('Mensagem de erro indicando conflito'),
 				},
 			},
 		},
@@ -52,7 +52,7 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 
 			if (hasUser) {
 				return reply.status(HTTP_STATUS.CONFLICT).send({
-					message: "Email já está em uso",
+					message: 'Email já está em uso',
 				})
 			}
 
@@ -64,7 +64,7 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 				sub: user.id,
 			})
 
-			return reply.setCookie("token", token).status(HTTP_STATUS.CREATED).send()
+			return reply.setCookie('token', token).status(HTTP_STATUS.CREATED).send()
 		}
 	)
 }

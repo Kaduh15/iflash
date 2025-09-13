@@ -1,18 +1,18 @@
-import cookie from "@fastify/cookie"
-import fastifyCors from "@fastify/cors"
-import fastifySwagger from "@fastify/swagger"
-import fastifyScaler from "@scalar/fastify-api-reference"
-import { fastify } from "fastify"
+import cookie from '@fastify/cookie'
+import fastifyCors from '@fastify/cors'
+import fastifySwagger from '@fastify/swagger'
+import fastifyScaler from '@scalar/fastify-api-reference'
+import { fastify } from 'fastify'
 import {
 	jsonSchemaTransform,
 	serializerCompiler,
 	validatorCompiler,
 	type ZodTypeProvider,
-} from "fastify-type-provider-zod"
-import { z } from "zod/v4"
-import { env } from "./env.ts"
-import { authSignInRouter } from "./routes/sign-in.ts"
-import { authSignUpRouter } from "./routes/sign-up.ts"
+} from 'fastify-type-provider-zod'
+import { z } from 'zod/v4'
+import { env } from './env.ts'
+import { authSignInRouter } from './routes/sign-in.ts'
+import { authSignUpRouter } from './routes/sign-up.ts'
 
 const SECONDS_PER_MINUTE = 60
 const MINUTES_PER_HOUR = 60
@@ -24,47 +24,47 @@ const ONE_WEEK_SECONDS =
 const app = fastify({
 	logger: {
 		transport: {
-			target: "pino-pretty",
+			target: 'pino-pretty',
 			options: {
-				translateTime: "HH:MM:ss Z",
-				ignore: "pid,hostname",
+				translateTime: 'HH:MM:ss Z',
+				ignore: 'pid,hostname',
 			},
 		},
 	},
 }).withTypeProvider<ZodTypeProvider>()
 
 app.register(fastifyCors, {
-	origin: "http://localhost:5173",
+	origin: 'http://localhost:5173',
 })
 
 app.register(cookie, {
 	secret: env.COOKIE_SECRET,
-	hook: "onRequest",
+	hook: 'onRequest',
 	parseOptions: {
-		path: "/",
+		path: '/',
 		httpOnly: true,
-		secure: env.NODE_ENV === "production",
+		secure: env.NODE_ENV === 'production',
 		maxAge: ONE_WEEK_SECONDS,
-		sameSite: "strict",
+		sameSite: 'strict',
 	},
 })
 
 await app.register(fastifySwagger, {
 	openapi: {
-		openapi: "3.0.0",
+		openapi: '3.0.0',
 		info: {
-			title: "Test swagger",
-			description: "Testing the Fastify swagger API",
-			version: "0.1.0",
+			title: 'Test swagger',
+			description: 'Testing the Fastify swagger API',
+			version: '0.1.0',
 		},
 	},
 	transform: jsonSchemaTransform,
 })
 
 await app.register(fastifyScaler, {
-	routePrefix: "/docs",
+	routePrefix: '/docs',
 	configuration: {
-		theme: "kepler",
+		theme: 'kepler',
 	},
 })
 
@@ -72,17 +72,17 @@ app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
 
 app.get(
-	"/health",
+	'/health',
 	{
 		schema: {
-			tags: ["Health"],
+			tags: ['Health'],
 			response: {
-				200: z.string().default("ok"),
+				200: z.string().default('ok'),
 			},
 		},
 	},
 	() => {
-		return "ok"
+		return 'ok'
 	}
 )
 
