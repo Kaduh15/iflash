@@ -2,18 +2,17 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "start": "node --env-file .env --experimental-strip-types src/server.ts",
-    "dev": "node --env-file .env --experimental-strip-types --watch src/server.ts",
-    "db:up": "docker run --name db -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=mydb -p 5432:5432 -v db-data:/var/lib/postgresql/data -d postgres:15",
-    "db:down": "docker stop db && docker rm db",
-    "db:clean": "docker volume rm db-data || true",
+    "start": "node --env-file .env src/server.ts",
+    "dev": "node --env-file .env --watch src/server.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "lint": "ultracite format",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretest": "dotenv -e .env.test drizzle-kit migrate",
+    "test": "dotenv -e .env.test vitest run",
+    "test:watch": "dotenv -e .env.test vitest watch -c vitest.config.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,11 +24,15 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.3.0",
     "@types/pg": "^8.15.5",
+    "@types/supertest": "^6.0.3",
     "@types/uuid": "^10.0.0",
+    "dotenv-cli": "^10.0.0",
     "drizzle-kit": "^0.31.4",
+    "supertest": "^7.1.4",
     "tsx": "^4.20.4",
     "typescript": "^5.9.2",
-    "ultracite": "5.2.4"
+    "ultracite": "5.2.4",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@fastify/cookie": "^11.0.2",
