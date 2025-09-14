@@ -1,0 +1,14 @@
+# Dependências locais
+node_modules
+pnpm-lock.yaml
+
+# Configurações locais
+.env
+.env.* 
+
+# Pastas não necessárias
+.vscode
+.github
+
+# Cache/buildup
+*.log
