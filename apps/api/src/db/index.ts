@@ -6,5 +6,5 @@ import { schema } from './schemas/index.ts'
 
 export const db = drizzle(env.DATABASE_URL, {
 	schema,
-	logger: true,
+	logger: env.NODE_ENV !== 'test',
 })

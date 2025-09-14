@@ -23,7 +23,7 @@ const ONE_WEEK_SECONDS =
 	SECONDS_PER_MINUTE * MINUTES_PER_HOUR * HOURS_PER_DAY * DAYS_PER_WEEK
 
 const app = fastify({
-	logger: {
+	logger: env.NODE_ENV !== 'test' && {
 		transport: {
 			target: 'pino-pretty',
 			options: {
