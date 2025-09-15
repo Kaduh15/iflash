@@ -23,7 +23,7 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 							`Nome precisa ter pelo menos ${NAME_MIN_LENGTH} caracteres`
 						)
 						.describe('Nome do usuário'),
-					email: z.email().describe('Email do usuário'),
+					email: z.email().describe('Email do usuário').toLowerCase(),
 					password: z
 						.string()
 						.min(

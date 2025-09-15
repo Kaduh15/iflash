@@ -15,7 +15,7 @@ export const authSignInRouter: FastifyPluginCallbackZod = (app) => {
 			schema: {
 				tags: ['Auth'],
 				body: z.object({
-					email: z.email().describe('Email do usuário'),
+					email: z.email().describe('Email do usuário').toLowerCase(),
 					password: z
 						.string()
 						.min(
@@ -25,7 +25,9 @@ export const authSignInRouter: FastifyPluginCallbackZod = (app) => {
 						.describe('Senha do usuário'),
 				}),
 				response: {
-					[HTTP_STATUS.OK]: z.null().describe('Login realizado com sucesso'),
+					[HTTP_STATUS.NO_CONTENT]: z
+						.null()
+						.describe('Login realizado com sucesso'),
 					[HTTP_STATUS.UNAUTHORIZED]: z
 						.object({
 							message: z.string().default('Email ou senha inválidos'),
@@ -57,7 +59,10 @@ export const authSignInRouter: FastifyPluginCallbackZod = (app) => {
 
 			await registerLogin(user.id)
 
-			return reply.setCookie('token', token).status(HTTP_STATUS.OK).send()
+			return reply
+				.setCookie('token', token)
+				.status(HTTP_STATUS.NO_CONTENT)
+				.send()
 		}
 	)
 }
