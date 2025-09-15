@@ -22,7 +22,8 @@
           "options": {
             "allow": ["warn", "error", "info"]
           }
-        }
+        },
+        "useAwait": "off"
       },
       "nursery": {
         "useConsistentTypeDefinitions": "off"

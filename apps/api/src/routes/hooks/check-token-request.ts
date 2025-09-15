@@ -2,7 +2,6 @@ import type { FastifyReply, FastifyRequest } from 'fastify'
 import { HTTP_STATUS } from '../../constants/https-status.ts'
 import { verifyToken } from '../../utils/jwt.ts'
 
-// biome-ignore lint/suspicious/useAwait: <>
 export async function checkTokenRequest(
 	request: FastifyRequest,
 	reply: FastifyReply
