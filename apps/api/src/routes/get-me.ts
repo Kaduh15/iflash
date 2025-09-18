@@ -1,5 +1,6 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
+
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { getUserById } from '../db/functions/get-user-by-id.ts'
 import { checkTokenRequest } from './hooks/check-token-request.ts'

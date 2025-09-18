@@ -1,5 +1,6 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
+
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
 import { registerLogin } from '../db/functions/register-login.ts'

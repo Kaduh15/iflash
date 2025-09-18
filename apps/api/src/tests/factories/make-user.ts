@@ -20,7 +20,7 @@ export async function makeUser(): Promise<MakeUserReturn> {
 		.insert(User)
 		.values({
 			name: fakerPT_BR.person.fullName(),
-			email: fakerPT_BR.internet.email(),
+			email: fakerPT_BR.internet.email().toLocaleLowerCase(),
 			password: await hash(passwordBeforeHash),
 		})
 		.returning()
