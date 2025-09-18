@@ -1,5 +1,6 @@
 import request from 'supertest'
 import { describe, expect, test } from 'vitest'
+
 import { app } from '../app.ts'
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { makeUser } from '../tests/factories/make-user.ts'
