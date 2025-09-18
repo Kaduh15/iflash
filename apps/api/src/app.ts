@@ -12,6 +12,7 @@ import {
 import { z } from 'zod/v4'
 import { env } from './env.ts'
 import { getMe } from './routes/get-me.ts'
+import { authLogoutRouter } from './routes/logout.ts'
 import { authSignInRouter } from './routes/sign-in.ts'
 import { authSignUpRouter } from './routes/sign-up.ts'
 
@@ -90,5 +91,6 @@ app.get(
 app.register(authSignUpRouter)
 app.register(authSignInRouter)
 app.register(getMe)
+app.register(authLogoutRouter)
 
 export { app }

@@ -1,8 +1,9 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
+
 import { HTTP_STATUS } from '../constants/https-status.ts'
 
-export const authLogout: FastifyPluginCallbackZod = (app) => {
+export const authLogoutRouter: FastifyPluginCallbackZod = (app) => {
 	app.post(
 		'/auth/logout',
 		{
