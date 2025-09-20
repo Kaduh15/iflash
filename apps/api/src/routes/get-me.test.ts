@@ -19,8 +19,8 @@ describe('GET /me', () => {
 		const response = await request(app.server)
 			.get('/me')
 			.set('Cookie', [`token=${token}`])
-			.expect(HTTP_STATUS.OK)
 
+		expect(response.status).toBe(HTTP_STATUS.OK)
 		expect(response.body).toEqual({
 			user: {
 				id: expect.any(String),
