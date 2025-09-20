@@ -9,7 +9,7 @@ import {
 	timestamp,
 	uuid,
 } from 'drizzle-orm/pg-core'
-
+import { v7 as uuidv7 } from 'uuid'
 import { User } from './user-schema.ts'
 import { Word } from './word.ts'
 
@@ -24,6 +24,7 @@ export const statusSchema = pgEnum('status', [
 export const UserWord = pgTable(
 	'user_words',
 	{
+		id: uuid('id').primaryKey().$defaultFn(uuidv7),
 		userId: uuid('user_id')
 			.references(() => User.id, { onDelete: 'cascade' })
 			.notNull(),
@@ -35,7 +36,7 @@ export const UserWord = pgTable(
 		ease: integer('ease'),
 		lapses: integer('lapses').default(0).notNull(),
 		seenCount: integer('seen_count').default(0).notNull(),
-		lastResult: resultSchema('last_result').notNull(),
+		lastResult: resultSchema('last_result'),
 		lastSeenAt: timestamp('last_seen_at', { withTimezone: true }),
 	},
 	(table) => [
