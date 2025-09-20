@@ -11,6 +11,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
 import { env } from './env.ts'
+import { bootRouter } from './routes/boot.ts'
 import { getMe } from './routes/get-me.ts'
 import { authLogoutRouter } from './routes/logout.ts'
 import { authSignInRouter } from './routes/sign-in.ts'
@@ -90,7 +91,8 @@ app.get(
 
 app.register(authSignUpRouter)
 app.register(authSignInRouter)
-app.register(getMe)
 app.register(authLogoutRouter)
+app.register(getMe)
+app.register(bootRouter)
 
 export { app }
