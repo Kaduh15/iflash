@@ -43,19 +43,11 @@ export const bootRouter: FastifyPluginCallbackZod = (app) => {
 							}),
 						})
 						.describe('Log diário retornado com sucesso'),
-					[HTTP_STATUS.NO_CONTENT]: z
-						.null()
-						.describe('Boot realizado com sucesso'),
 					[HTTP_STATUS.UNAUTHORIZED]: z
 						.object({
 							message: z.string().default('Unauthorized'),
 						})
-						.describe('Usuário não autorizado'),
-					[HTTP_STATUS.CONTINUE]: z
-						.null()
-						.describe(
-							'Erro ao registrar logs diários, mas o boot continua normalmente'
-						),
+						.describe('Usuário não autorizado')
 				},
 			},
 		},
