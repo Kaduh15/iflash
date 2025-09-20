@@ -1,5 +1,6 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
 import z from 'zod'
+
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { createUser } from '../db/functions/create-user.ts'
 import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
@@ -41,6 +42,11 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 							message: z.string(),
 						})
 						.describe('Mensagem de erro indicando conflito'),
+					[HTTP_STATUS.INTERNAL_SERVER_ERROR]: z
+						.object({
+							message: z.string(),
+						})
+						.describe('Erro interno do servidor'),
 				},
 			},
 		},
