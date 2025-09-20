@@ -1,0 +1,36 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "${PORT:-3333}:${PORT:-3333}"
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/iflash}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+    env_file:
+      - ./apps/api/.env
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: iflash
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./apps/api/docker/setup.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
