@@ -56,10 +56,21 @@ await app.register(fastifySwagger, {
 	openapi: {
 		openapi: '3.0.0',
 		info: {
-			title: 'Test swagger',
-			description: 'Testing the Fastify swagger API',
-			version: '0.1.0',
+			title: 'iFlash API',
+			description: 'API para autenticação, gerenciamento de usuários e recursos do iFlash. Documentação gerada automaticamente via Swagger/OpenAPI 3.0.',
+			version: '1.0.0',
+			contact: {
+				name: 'Kadu',
+				email: 'kadu.silva2014@gmail.com',
+				url: 'https://github.com/kaduh15',
+			},
 		},
+		servers: [
+			{
+				url: 'http://localhost:3333',
+				description: 'Servidor local de desenvolvimento',
+			},
+		],
 	},
 	transform: jsonSchemaTransform,
 })
