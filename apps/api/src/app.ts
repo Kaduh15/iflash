@@ -14,6 +14,7 @@ import { env } from './env.ts'
 import { bootRouter } from './routes/boot.ts'
 import { getMe } from './routes/get-me.ts'
 import { authLogoutRouter } from './routes/logout.ts'
+import { sessionStartRouter } from './routes/session-start.ts'
 import { authSignInRouter } from './routes/sign-in.ts'
 import { authSignUpRouter } from './routes/sign-up.ts'
 
@@ -57,7 +58,8 @@ await app.register(fastifySwagger, {
 		openapi: '3.0.0',
 		info: {
 			title: 'iFlash API',
-			description: 'API para autenticação, gerenciamento de usuários e recursos do iFlash. Documentação gerada automaticamente via Swagger/OpenAPI 3.0.',
+			description:
+				'API para autenticação, gerenciamento de usuários e recursos do iFlash. Documentação gerada automaticamente via Swagger/OpenAPI 3.0.',
 			version: '1.0.0',
 			contact: {
 				name: 'Kadu',
@@ -105,5 +107,6 @@ app.register(authSignInRouter)
 app.register(authLogoutRouter)
 app.register(getMe)
 app.register(bootRouter)
+app.register(sessionStartRouter)
 
 export { app }
