@@ -8,8 +8,8 @@ services:
       - "${PORT:-3333}:${PORT:-3333}"
     environment:
       PORT: ${PORT:-3333}
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/iflash}
-      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:${DB_PORT:-5432}/iflash}
+      REDIS_URL: ${REDIS_URL:-redis://redis:${REDIS_PORT:-6379}}
       JWT_SECRET: ${JWT_SECRET}
       COOKIE_SECRET: ${COOKIE_SECRET}
     env_file:
@@ -27,13 +27,13 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: iflash
     ports:
-      - "5432:5432"
+      - "${DB_PORT:-5432}:5432"
     volumes:
       - ./apps/api/docker/setup.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     image: redis:7
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
