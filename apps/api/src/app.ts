@@ -14,6 +14,8 @@ import { env } from './env.ts'
 import { bootRouter } from './routes/boot.ts'
 import { getMe } from './routes/get-me.ts'
 import { authLogoutRouter } from './routes/logout.ts'
+import { sessionEndRouter } from './routes/session-end.ts'
+import { sessionRevealCardRouter } from './routes/session-reveal-card.ts'
 import { sessionStartRouter } from './routes/session-start.ts'
 import { authSignInRouter } from './routes/sign-in.ts'
 import { authSignUpRouter } from './routes/sign-up.ts'
@@ -108,5 +110,7 @@ app.register(authLogoutRouter)
 app.register(getMe)
 app.register(bootRouter)
 app.register(sessionStartRouter)
+app.register(sessionEndRouter)
+app.register(sessionRevealCardRouter)
 
 export { app }
