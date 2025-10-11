@@ -1,1 +1,0 @@
-ALTER TABLE "user_words" ALTER COLUMN "last_result" DROP NOT NULL;

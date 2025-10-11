@@ -1,1 +1,0 @@
-ALTER TABLE "user_words" ADD COLUMN "id" uuid PRIMARY KEY NOT NULL;

@@ -1,1 +1,0 @@
-ALTER TABLE "study_sessions" DROP COLUMN "source";
