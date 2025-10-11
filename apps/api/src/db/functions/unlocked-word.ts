@@ -1,49 +1,75 @@
-import { eq, notInArray, sql } from 'drizzle-orm'
+import { and, eq, isNull, lt, notExists, or, sql } from 'drizzle-orm'
+import type { DatabaseTransaction } from '../../@types/transaction.db.ts'
 import { getToday } from '../../utils/get-today.ts'
 import { db } from '../index.ts'
+import { User } from '../schemas/user-schema.ts'
 import { UserWord } from '../schemas/user-word-schemas.ts'
 import { Word } from '../schemas/word.ts'
 
-type UnlockedWordInput = {
+type UnlockedWordParams = {
 	userId: string
 	quantity?: number
 }
 
-export async function unlockedWord({
-	userId,
-	quantity = 1,
-}: UnlockedWordInput) {
-	const wordsUnlocked = await db
-		.select({ wordId: UserWord.wordId })
-		.from(UserWord)
-		.where(eq(UserWord.userId, userId))
+export async function unlockedWord(
+	{ userId, quantity }: UnlockedWordParams,
+	tx?: DatabaseTransaction
+) {
+	const database = tx ?? db
+	const quantityFinal = quantity ?? 1
 
-	const words = await db
+	const [user] = await database
 		.select()
-		.from(Word)
+		.from(User)
 		.where(
-			notInArray(
-				Word.id,
-				wordsUnlocked.map((w) => w.wordId)
+			and(
+				eq(User.id, userId),
+				or(lt(User.lastUnlockedDate, getToday()), isNull(User.lastUnlockedDate))
 			)
 		)
-		.limit(quantity)
-		.orderBy(sql`RANDOM()`)
 
-	if (words.length === 0) {
-		return
+	if (!user) {
+		throw new Error(
+			'User not found or already unlocked words today. You can unlock words once every 24 hours.'
+		)
 	}
 
-	type UserWordInsertValuesType = typeof UserWord.$inferInsert
+	return database.transaction(async (transaction) => {
+		const lockedWords = await transaction
+			.select()
+			.from(Word)
+			.where(
+				notExists(
+					db
+						.select()
+						.from(UserWord)
+						.where(
+							and(eq(UserWord.userId, userId), eq(UserWord.wordId, Word.id))
+						)
+				)
+			)
+			.orderBy(sql`RANDOM()`)
+			.limit(quantityFinal)
 
-	const userWords: UserWordInsertValuesType[] = words.map((word) => ({
-		userId,
-		wordId: word.id,
-		status: 'unlocked',
-		nextReviewDate: getToday(),
-	}))
+		if (lockedWords.length === 0) {
+			return { wordUnlocked: [] }
+		}
 
-	const inserts = await db.insert(UserWord).values(userWords).returning()
+		const unlockedWords = await transaction
+			.insert(UserWord)
+			.values(
+				lockedWords.map((word) => ({
+					userId,
+					wordId: word.id,
+					nextReviewDate: getToday(),
+				}))
+			)
+			.returning()
 
-	return { inserts }
+		await transaction.update(User).set({
+			lastUnlockedDate: getToday(),
+		})
+
+		return { wordUnlocked: unlockedWords }
+	})
 }

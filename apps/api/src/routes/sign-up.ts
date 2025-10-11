@@ -4,6 +4,7 @@ import z from 'zod'
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { createUser } from '../db/functions/create-user.ts'
 import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
+import { unlockedWord } from '../db/functions/unlocked-word.ts'
 import { hash } from '../utils/crypt.ts'
 import { createToken } from '../utils/jwt.ts'
 
@@ -68,6 +69,8 @@ export const authSignUpRouter: FastifyPluginCallbackZod = (app) => {
 			const token = createToken({
 				sub: user.id,
 			})
+
+			await unlockedWord({ userId: user.id, quantity: 5 })
 
 			return reply.setCookie('token', token).status(HTTP_STATUS.CREATED).send()
 		}

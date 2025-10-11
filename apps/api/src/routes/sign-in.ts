@@ -3,7 +3,6 @@ import z from 'zod'
 
 import { HTTP_STATUS } from '../constants/https-status.ts'
 import { getUserByEmail } from '../db/functions/get-user-by-email.ts'
-import { registerLogin } from '../db/functions/register-login.ts'
 import { verifyHash } from '../utils/crypt.ts'
 import { createToken } from '../utils/jwt.ts'
 
@@ -57,8 +56,6 @@ export const authSignInRouter: FastifyPluginCallbackZod = (app) => {
 			const token = createToken({
 				sub: user.id,
 			})
-
-			await registerLogin(user.id)
 
 			return reply
 				.setCookie('token', token)
