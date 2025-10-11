@@ -1,63 +1,9 @@
 {
-  "id": "6d4f3009-386b-462c-a020-61baf28805fe",
+  "id": "50d208e8-b8be-48ff-b8d1-d7a7519cd506",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.daily_logs": {
-      "name": "daily_logs",
-      "schema": "",
-      "columns": {
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "date": {
-          "name": "date",
-          "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "unlocked_count": {
-          "name": "unlocked_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "studied_count": {
-          "name": "studied_count",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "daily_logs_user_id_users_id_fk": {
-          "name": "daily_logs_user_id_users_id_fk",
-          "tableFrom": "daily_logs",
-          "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "daily_logs_user_id_date_pk": {
-          "name": "daily_logs_user_id_date_pk",
-          "columns": ["user_id", "date"]
-        }
-      },
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.review_events": {
       "name": "review_events",
       "schema": "",
@@ -93,8 +39,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "schedule_next_review_date": {
-          "name": "schedule_next_review_date",
+        "next_review_date": {
+          "name": "next_review_date",
           "type": "date",
           "primaryKey": false,
           "notNull": true
@@ -113,8 +59,12 @@
           "name": "review_events_session_id_study_sessions_id_fk",
           "tableFrom": "review_events",
           "tableTo": "study_sessions",
-          "columnsFrom": ["session_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "session_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -122,8 +72,12 @@
           "name": "review_events_user_id_users_id_fk",
           "tableFrom": "review_events",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -131,67 +85,17 @@
           "name": "review_events_word_id_words_id_fk",
           "tableFrom": "review_events",
           "tableTo": "words",
-          "columnsFrom": ["word_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "word_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.steak_counters": {
-      "name": "steak_counters",
-      "schema": "",
-      "columns": {
-        "user_id": {
-          "name": "user_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "current_steak_days": {
-          "name": "current_steak_days",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "best_steak_days": {
-          "name": "best_steak_days",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "last_study_date": {
-          "name": "last_study_date",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "steak_counters_user_id_users_id_fk": {
-          "name": "steak_counters_user_id_users_id_fk",
-          "tableFrom": "steak_counters",
-          "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {
-        "steak_counters_user_id_pk": {
-          "name": "steak_counters_user_id_pk",
-          "columns": ["user_id"]
-        }
-      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -225,25 +129,6 @@
           "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
-        },
-        "cards_total_planned": {
-          "name": "cards_total_planned",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "cards_completed": {
-          "name": "cards_completed",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
-        },
-        "source": {
-          "name": "source",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
@@ -252,8 +137,12 @@
           "name": "study_sessions_user_id_users_id_fk",
           "tableFrom": "study_sessions",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -292,9 +181,29 @@
           "primaryKey": false,
           "notNull": true
         },
-        "last_login_at": {
-          "name": "last_login_at",
-          "type": "timestamp with time zone",
+        "current_steak": {
+          "name": "current_steak",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "best_steak": {
+          "name": "best_steak",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "last_study_date": {
+          "name": "last_study_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "last_unlocked_date": {
+          "name": "last_unlocked_date",
+          "type": "date",
           "primaryKey": false,
           "notNull": false
         },
@@ -320,7 +229,9 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": ["email"]
+          "columns": [
+            "email"
+          ]
         }
       },
       "policies": {},
@@ -331,6 +242,12 @@
       "name": "user_words",
       "schema": "",
       "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
         "user_id": {
           "name": "user_id",
           "type": "uuid",
@@ -343,23 +260,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "status": {
-          "name": "status",
-          "type": "status",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'locked'"
-        },
         "next_review_date": {
           "name": "next_review_date",
           "type": "date",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "ease": {
-          "name": "ease",
-          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -382,7 +285,7 @@
           "type": "result",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "last_seen_at": {
           "name": "last_seen_at",
@@ -421,21 +324,6 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
-        },
-        "idx_user_words_status": {
-          "name": "idx_user_words_status",
-          "columns": [
-            {
-              "expression": "status",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
         }
       },
       "foreignKeys": {
@@ -443,8 +331,12 @@
           "name": "user_words_user_id_users_id_fk",
           "tableFrom": "user_words",
           "tableTo": "users",
-          "columnsFrom": ["user_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -452,8 +344,12 @@
           "name": "user_words_word_id_words_id_fk",
           "tableFrom": "user_words",
           "tableTo": "words",
-          "columnsFrom": ["word_id"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "word_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -461,12 +357,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
-      "checkConstraints": {
-        "ease_check": {
-          "name": "ease_check",
-          "value": "\"user_words\".\"ease\" >= 1 AND \"user_words\".\"ease\" <= 3"
-        }
-      },
+      "checkConstraints": {},
       "isRLSEnabled": false
     },
     "public.words": {
@@ -524,12 +415,12 @@
     "public.result": {
       "name": "result",
       "schema": "public",
-      "values": ["fail", "hard", "good", "easy"]
-    },
-    "public.status": {
-      "name": "status",
-      "schema": "public",
-      "values": ["locked", "unlocked", "learning", "done"]
+      "values": [
+        "fail",
+        "hard",
+        "good",
+        "easy"
+      ]
     }
   },
   "schemas": {},
