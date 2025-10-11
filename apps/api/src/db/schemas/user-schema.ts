@@ -1,4 +1,11 @@
-import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import {
+	date,
+	integer,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+} from 'drizzle-orm/pg-core'
 import { v7 as uuidv7 } from 'uuid'
 
 export const User = pgTable('users', {
@@ -8,7 +15,10 @@ export const User = pgTable('users', {
 	name: text('name').notNull(),
 	email: text('email').notNull().unique(),
 	password: text('password').notNull(),
-	lastLoginAt: timestamp('last_login_at', { withTimezone: true }),
+	currentSteak: integer('current_steak').notNull().default(0),
+	bestSteak: integer('best_steak').notNull().default(0),
+	lastStudyDate: date('last_study_date'),
+	lastUnlockedDate: date('last_unlocked_date'),
 	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
 	updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow(),
 })

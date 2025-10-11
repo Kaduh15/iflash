@@ -1,4 +1,4 @@
-import { integer, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
+import { pgTable, timestamp, uuid } from 'drizzle-orm/pg-core'
 import { v7 as uuidv7 } from 'uuid'
 import { User } from './user-schema.ts'
 
@@ -13,6 +13,4 @@ export const StudySession = pgTable('study_sessions', {
 		.defaultNow()
 		.notNull(),
 	endedAt: timestamp('ended_at', { withTimezone: true }),
-	cardsTotalPlanned: integer('cards_total_planned').notNull(),
-	cardsCompleted: integer('cards_completed').default(0).notNull(),
 })

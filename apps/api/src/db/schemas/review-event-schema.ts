@@ -20,7 +20,7 @@ export const ReviewEvent = pgTable('review_events', {
 		.references(() => Word.id, { onDelete: 'cascade' })
 		.notNull(),
 	result: resultSchema('result').notNull(),
-	scheduleNextReviewDate: date('schedule_next_review_date').notNull(),
+	next_review_date: date('next_review_date').notNull(),
 	createdAt: timestamp('created_at', { withTimezone: true })
 		.defaultNow()
 		.notNull(),
