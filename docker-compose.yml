@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+      target: dev
+    ports:
+      - "${PORT:-3333}:${PORT:-3333}"
+    environment:
+      PORT: ${PORT:-3333}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:${DB_PORT:-5432}/iflash}
+      REDIS_URL: ${REDIS_URL:-redis://redis:${REDIS_PORT:-6379}}
+      JWT_SECRET: ${JWT_SECRET}
+      COOKIE_SECRET: ${COOKIE_SECRET}
+    env_file:
+      - ./apps/api/.env
+    volumes:
+      - ./apps/api:/app
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: iflash
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - ./apps/api/docker/setup.sql:/docker-entrypoint-initdb.d/init.sql
+
+  redis:
+    image: redis:7
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
