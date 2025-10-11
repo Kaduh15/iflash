@@ -11,14 +11,12 @@ import {
 } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
 import { env } from './env.ts'
-import { bootRouter } from './routes/boot.ts'
-import { getMe } from './routes/get-me.ts'
 import { authLogoutRouter } from './routes/logout.ts'
-import { sessionEndRouter } from './routes/session-end.ts'
-import { sessionRevealCardRouter } from './routes/session-reveal-card.ts'
-import { sessionStartRouter } from './routes/session-start.ts'
 import { authSignInRouter } from './routes/sign-in.ts'
 import { authSignUpRouter } from './routes/sign-up.ts'
+import { StudyCurrentWordRouter } from './routes/study-current-word .ts'
+import { StudyReviewWordRouter } from './routes/study-review-word.ts'
+import { StudyStartRouter } from './routes/study-start.ts'
 
 const SECONDS_PER_MINUTE = 60
 const MINUTES_PER_HOUR = 60
@@ -107,10 +105,8 @@ app.get(
 app.register(authSignUpRouter)
 app.register(authSignInRouter)
 app.register(authLogoutRouter)
-app.register(getMe)
-app.register(bootRouter)
-app.register(sessionStartRouter)
-app.register(sessionEndRouter)
-app.register(sessionRevealCardRouter)
+app.register(StudyStartRouter)
+app.register(StudyCurrentWordRouter)
+app.register(StudyReviewWordRouter)
 
 export { app }
